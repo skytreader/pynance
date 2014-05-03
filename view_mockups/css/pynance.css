@@ -8,11 +8,6 @@ body{
     background-image: url("../images/noisy_grid/noisy_grid.png");
 }
 
-div.login_matter{
-    margin: 0px 35%;
-    text-align: center;
-}
-
 div.head_box{
     background-color: #000;
     background-image: url("../images/simple_dashed/simple_dashed.png");
