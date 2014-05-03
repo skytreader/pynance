@@ -10,7 +10,15 @@ class Pynance(object):
     @cherrypy.expose
     def index(self):
         template = TEMPLATE_ENVIRONMENT.get_template("views/index.jinja")
-        return template.render()
+        return template.render(static=os.getcwd())
 
 if __name__ == "__main__":
-    cherrypy.quickstart(Pynance())
+    config = {
+        "/css/bootstrap.css":
+            {
+                "tools.staticfile.on": True,
+                "tools.staticfile.filename": os.getcwd() + "/views/css/bootstrap/css/bootstrap.css"
+            }
+    }
+    #cherrypy.tree.mount(Pynance(), config=config)
+    cherrypy.quickstart(Pynance(), config=config)
