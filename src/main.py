@@ -23,6 +23,11 @@ if __name__ == "__main__":
             {
                 "tools.staticfile.on": True,
                 "tools.staticfile.filename": os.getcwd() + "/views/css/pynance.css"
+            },
+        "/images/simple_dashed":
+            {
+                "tools.staticdir.on": True,
+                "tools.staticdir.dir": os.getcwd() + "/views/images/simple_dashed"
             }
     }
     #cherrypy.tree.mount(Pynance(), config=config)
