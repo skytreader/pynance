@@ -12,6 +12,7 @@ div.head_box{
     background-color: #000;
     background-image: url("/images/simple_dashed/simple_dashed.png");
     width: 100%;
+    min-height: 20%;
     position: absolute;
 }
 
@@ -25,7 +26,7 @@ div.login_box{
     position: relative;
 }
 
-div.ads_box{
+div.pynance_promo{
     color: #fff;
     padding: 20px 10px;
     position: relative;
