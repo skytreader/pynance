@@ -8,7 +8,12 @@ Base = declarative_base()
 DATA_SOURCE = DB_DRIVER + "://" + DB_USERNAME + ":" + DB_PASSWORD + "@" + DB_HOST + "/" + DB_NAME 
 
 # Source http://docs.sqlalchemy.org/en/rel_0_9/orm/session.html
-db_engine = create_engine(DATA_SOURCE)
+# http://www.defuze.org/archives/222-integrating-sqlalchemy-into-a-cherrypy-application.html
+db_engine = create_engine(DATA_SOURCE, pool_size=20, max_overflow=0)
+
+Session = sessionmaker(bind=db_engine)
+
+session = Session()
 
 class TableTemplate(Base):
     __tablename__ = None
