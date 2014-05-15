@@ -1,5 +1,5 @@
 from orm_base import TableTemplate
-from sqlalchemy import BOOLEAN, Column, DECIMAL, ForeignKey, INTEGER, VARCHAR
+from sqlalchemy import BOOLEAN, Column, DECIMAL, ForeignKey, INTEGER, TIMESTAMP, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 
 import datetime
