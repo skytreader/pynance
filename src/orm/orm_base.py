@@ -3,12 +3,9 @@ from db_config import DBConfig
 from cherrypy.process import plugins, wspbus
 
 from sqlalchemy import Column, Integer, String, TIMESTAMP, create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 import cherrypy
-
-Base = declarative_base()
 
 # Source http://docs.sqlalchemy.org/en/rel_0_9/orm/session.html
 # http://www.defuze.org/archives/222-integrating-sqlalchemy-into-a-cherrypy-application.html
@@ -18,7 +15,7 @@ Base = declarative_base()
 
 # session = Session()
 
-class TableTemplate(Base):
+class TableTemplate:
     __tablename__ = None
     __table_args__ = {"mysql_engine":"InnoDB", "charset":"utf8"}
     

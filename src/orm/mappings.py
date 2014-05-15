@@ -1,12 +1,15 @@
 from table_template import TableTemplate
 from sqlalchemy import BOOLEAN, Column, DECIMAL, ForeignKey, INTEGER, VARCHAR
+from sqlalchemy.ext.declarative import declarative_base
 
 import datetime
 
 BUDGET_PRECISION = 8
 BUDGET_SCALE = 2
 
-class Users(TableTemplate):
+Base = declarative_base()
+
+class Users(TableTemplate, Base):
     __tablename__ = "users"
 
     userid = Column(INTEGER, primary_key = True)
@@ -17,7 +20,7 @@ class Users(TableTemplate):
     can_write = Column(BOOLEAN, default =  False)
     can_exec = Column(BOOLEAN, default = False)
 
-class Expenses(TableTemplate):
+class Expenses(TableTemplate, Base):
     __tablename__ = "expenses"
 
     expense_id = Column(INTEGER, primary_key = True)
@@ -27,7 +30,7 @@ class Expenses(TableTemplate):
     is_planned = Column(BOOLEAN, default = False)
     expense_date = Column(TIMESTAMP, default = datetime.datetime.utcnow)
 
-class ExpenseBreakdown(TableTemplate):
+class ExpenseBreakdown(TableTemplate, Base):
     __tablename__ = "expense_breakdown"
 
     breakdown_id = Column(INTEGER, primary_key = True)
@@ -35,7 +38,7 @@ class ExpenseBreakdown(TableTemplate):
     expense_desc = Column(VARCHAR(length = 255))
     expense_cost = Column(DECIMAL(precision = BUDGET_PRECISION, scale = BUDGET_SCALE))
 
-class ExpenseProjections(TableTemplate):
+class ExpenseProjections(TableTemplate, Base):
     __tablename__ = "expense_projections"
 
     projection_id = Column(INTEGER, primary_key = True)
@@ -46,7 +49,7 @@ class ExpenseProjections(TableTemplate):
     recurrence_factor = Column(INTEGER)
     expense_fulfilled = Column(INTEGER, ForeignKey("expenses.expense_id"))
 
-class History(TableTemplate):
+class History(TableTemplate, Base):
     __tablename__ = "history"
 
     history_id = Column(INTEGER, primary_key = True)
