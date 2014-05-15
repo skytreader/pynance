@@ -3,7 +3,7 @@ from db_config import DBConfig
 from cherrypy.process import plugins, wspbus
 
 from sqlalchemy import Column, Integer, String, TIMESTAMP, create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 import cherrypy
 
@@ -60,7 +60,7 @@ class SAEngine(plugins.SimplePlugin):
     """
     
     def __init__(self, bus):
-        super(SAEngine, self).__init__(self, bus)
+        super(SAEngine, self).__init__(bus)
         self.sa_engine = None
         self.bus.subscribe("bind", self.bind)
 
