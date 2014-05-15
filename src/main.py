@@ -1,3 +1,5 @@
+from orm.orm_base import DBSessionTool, SAEngine
+
 import cherrypy
 import jinja2
 import os
@@ -30,5 +32,8 @@ if __name__ == "__main__":
                 "tools.staticdir.dir": os.getcwd() + "/views/images"
             }
     }
+    SAEngine(cherrypy.engine).subscribe()
+    cherrypy.tools.db = DBSessionTool()
+    # Huh? cherrypy.tree.mount?
     #cherrypy.tree.mount(Pynance(), config=config)
     cherrypy.quickstart(Pynance(), config=config)

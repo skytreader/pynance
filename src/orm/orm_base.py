@@ -36,7 +36,7 @@ class DBSessionTool(cherrypy.Tool):
     def __init__(self):
         super(DBSessionTool, self).__init__(self, "on_start_resource",\
           self.bind_session, priority=20)
-        self.session = scoped_session(sessionmaker(autoflush=True, autocommit=False)
+        self.session = scoped_session(sessionmaker(autoflush=True, autocommit=False))
 
     def _setup(self):
         super(DBSessionTool, self)._setup(self)

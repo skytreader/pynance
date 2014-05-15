@@ -9,4 +9,4 @@ class DBConfig:
     DB_PORT = 3306
     DB_NAME = "pynance"
 
-    DSN = DBConfig.DB_DRIVER + "://" + DBConfig.DB_USERNAME + ":" + DBConfig.DB_PASSWORD + "@" + DBConfig.DB_HOST + "/" + DBConfig.DB_NAME 
+    DSN = DB_DRIVER + "://" + DB_USERNAME + ":" + DB_PASSWORD + "@" + DB_HOST + "/" + DB_NAME 
