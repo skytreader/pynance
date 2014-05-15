@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS expense_projections(
     last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (projection_id),
     FOREIGN KEY (last_updater) REFERENCES users (userid),
-    FOREIGN_KEY (userid) REFERENCES users (userid),
+    FOREIGN KEY (userid) REFERENCES users (userid),
     FOREIGN KEY (expense_fulfilled) REFERENCES expenses (expense_id)
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 
