@@ -4,6 +4,7 @@ from cherrypy.process import plugins, wspbus
 
 from sqlalchemy import Column, Integer, String, TIMESTAMP, create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declared_attr
 
 import cherrypy
 
@@ -15,9 +16,14 @@ import cherrypy
 
 # session = Session()
 
-class TableTemplate:
-    __tablename__ = None
-    __table_args__ = {"mysql_engine":"InnoDB", "charset":"utf8"}
+class TableTemplate(object):
+    
+    @declared_attr
+    def __tablename__(cls):
+        return cls.__name__.lower()
+
+    __table_args__ = {"mysql_engine":"InnoDB"}
+    __mapper_args__ = {"always_refresh": True}
     
     create_time = Column(TIMESTAMP)
     last_updater = Column(Integer)

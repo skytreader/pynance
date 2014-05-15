@@ -1,4 +1,4 @@
-from table_template import TableTemplate
+from orm_base import TableTemplate
 from sqlalchemy import BOOLEAN, Column, DECIMAL, ForeignKey, INTEGER, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -9,8 +9,8 @@ BUDGET_SCALE = 2
 
 Base = declarative_base()
 
-class Users(TableTemplate, Base):
-    __tablename__ = "users"
+class Users(Base, TableTemplate):
+    #__tablename__ = "users"
 
     userid = Column(INTEGER, primary_key = True)
     username = Column(VARCHAR(length = 255))
