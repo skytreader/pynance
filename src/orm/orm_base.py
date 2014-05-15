@@ -22,7 +22,7 @@ class TableTemplate(object):
     def __tablename__(cls):
         return cls.__name__.lower()
 
-    __table_args__ = {"mysql_engine":"InnoDB"}
+    __table_args__ = {"mysql_engine":"InnoDB", "mysql_charset":"utf8"}
     __mapper_args__ = {"always_refresh": True}
     
     create_time = Column(TIMESTAMP)
