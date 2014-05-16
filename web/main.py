@@ -14,6 +14,15 @@ class Pynance(object):
         template = TEMPLATE_ENVIRONMENT.get_template("views/index.jinja")
         return template.render(static=os.getcwd())
 
+    @cherrypy.expose
+    def login(self, username):
+        if cherrypy.request.method == "POST":
+            return cherrypy.request.method + " " + username
+        else:
+            # raise 405
+            cherrypy.response.headers["Status"] = 405
+            return "Login with POST."
+
 if __name__ == "__main__":
     config = {
         "/css/bootstrap.css":
