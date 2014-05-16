@@ -1,5 +1,5 @@
-from src.orm import orm_base
-from src.orm.mappings import Users
+from web.orm import orm_base
+from web.orm.mappings import Users
 import cherrypy
 
 def login(username, password):  
