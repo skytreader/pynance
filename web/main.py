@@ -28,17 +28,17 @@ if __name__ == "__main__":
         "/css/bootstrap.css":
             {
                 "tools.staticfile.on": True,
-                "tools.staticfile.filename": os.getcwd() + "/views/css/bootstrap/css/bootstrap.css"
+                "tools.staticfile.filename": os.getcwd() + "/web/views/css/bootstrap/css/bootstrap.css"
             },
         "/css/pynance.css":
             {
                 "tools.staticfile.on": True,
-                "tools.staticfile.filename": os.getcwd() + "/views/css/pynance.css"
+                "tools.staticfile.filename": os.getcwd() + "/web/views/css/pynance.css"
             },
         "/images":
             {
                 "tools.staticdir.on": True,
-                "tools.staticdir.dir": os.getcwd() + "/views/images"
+                "tools.staticdir.dir": os.getcwd() + "/web/views/images"
             }
     }
     SAEngine(cherrypy.engine).subscribe()
