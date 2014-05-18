@@ -1,4 +1,5 @@
 from orm.orm_base import DBSessionTool, SAEngine
+from web.models.login import login_check
 
 import cherrypy
 import jinja2
@@ -15,9 +16,12 @@ class Pynance(object):
         return template.render(static=os.getcwd())
 
     @cherrypy.expose
-    def login(self, username):
+    def login(self, username, password):
         if cherrypy.request.method == "POST":
-            return cherrypy.request.method + " " + username
+            if login_check(username, password):
+                return "OK"
+            else:
+                return "FAIL"
         else:
             # raise 405
             cherrypy.response.status = 405
