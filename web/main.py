@@ -20,7 +20,7 @@ class Pynance(object):
             return cherrypy.request.method + " " + username
         else:
             # raise 405
-            cherrypy.response.headers["Status"] = 405
+            cherrypy.response.status = 405
             return "Login with POST."
 
 if __name__ == "__main__":
