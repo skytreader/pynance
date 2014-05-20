@@ -29,6 +29,15 @@ class TableTemplate(object):
     last_updater = Column(Integer)
     last_update = Column(TIMESTAMP)
 
+class CustomTool(cherrypy.Tool):
+    
+    def __init__(self):
+        super(CustomTool, self).__init__(self, "on_start_resource", self.test,\
+          priority=20)
+
+    def test(self):
+        print "test called"
+
 
 # TODO Understand this!
 class DBSessionTool(cherrypy.Tool):
@@ -37,12 +46,16 @@ class DBSessionTool(cherrypy.Tool):
     """
     
     def __init__(self):
-        super(DBSessionTool, self).__init__(self, "on_start_resource",\
-          self.bind_session, priority=20)
+        #super(DBSessionTool, self).__init__(self, "on_start_resource",\
+        #  self.bind_session, priority=20)
+        cherrypy.Tool.__init__(self, "on_start_resource", self.bind_session, \
+          priority=0)
         self.session = scoped_session(sessionmaker(autoflush=True, autocommit=False))
+        self.bind_session()
 
     def _setup(self):
-        super(DBSessionTool, self)._setup(self)
+        # super(DBSessionTool, self)._setup(self)
+        cherrypy.Tool._setup(self)
         cherrypy.request.hooks.attach("on_end_resource", self.commit_transaction,
           priority=80)
 
@@ -66,7 +79,8 @@ class SAEngine(plugins.SimplePlugin):
     """
     
     def __init__(self, bus):
-        super(SAEngine, self).__init__(bus)
+        # super(SAEngine, self).__init__(bus)
+        plugins.SimplePlugin.__init__(self, bus)
         self.sa_engine = None
         self.bus.subscribe("bind", self.bind)
 

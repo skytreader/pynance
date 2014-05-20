@@ -1,4 +1,4 @@
-from orm.orm_base import DBSessionTool, SAEngine
+from orm.orm_base import DBSessionTool, SAEngine#, CustomTool
 from models.login import login_check
 
 import cherrypy
@@ -43,10 +43,15 @@ if __name__ == "__main__":
             {
                 "tools.staticdir.on": True,
                 "tools.staticdir.dir": os.getcwd() + "/web/views/images"
+            },
+        "/":
+            {
+                "tools.db.on": True,
             }
     }
     SAEngine(cherrypy.engine).subscribe()
     cherrypy.tools.db = DBSessionTool()
+    #cherrypy.tools.chad = CustomTool()
     # Huh? cherrypy.tree.mount?
     cherrypy.tree.mount(Pynance(), config=config)
     #cherrypy.quickstart(Pynance(), config=config)
