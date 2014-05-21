@@ -3,5 +3,7 @@ from web.orm.mappings import Users
 import cherrypy
 
 def login_check(username, password):  
-    return cherrypy.request.db.query(Users).filter(Users__username=username).\
-      filter(Users__password=password)
+    q =  cherrypy.request.db.query(Users).filter(Users.username==username, \
+      Users.password==password)
+    cherrypy.log(str(q))
+    return cherrypy.request.db.query(q.exists()).count()

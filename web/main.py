@@ -18,6 +18,7 @@ class Pynance(object):
     @cherrypy.expose
     def login(self, username, password):
         if cherrypy.request.method == "POST":
+            cherrypy.log(str(login_check(username, password)))
             if login_check(username, password):
                 return "OK"
             else:
