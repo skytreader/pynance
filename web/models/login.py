@@ -5,5 +5,4 @@ import cherrypy
 def login_check(username, password):  
     q =  cherrypy.request.db.query(Users).filter(Users.username==username, \
       Users.password==password)
-    cherrypy.log(str(q))
-    return cherrypy.request.db.query(q.exists()).count()
+    return cherrypy.request.db.query(q.exists())[0][0]
