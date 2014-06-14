@@ -12,7 +12,7 @@ class Pynance(object):
     
     @cherrypy.expose
     def index(self):
-        template = TEMPLATE_ENVIRONMENT.get_template("views/index.jinja")
+        template = TEMPLATE_ENVIRONMENT.get_template("web/views/index.jinja")
         return template.render(static=os.getcwd())
 
     @cherrypy.expose
