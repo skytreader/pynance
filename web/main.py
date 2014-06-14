@@ -8,6 +8,18 @@ import os
 TEMPLATE_LOADER = jinja2.FileSystemLoader(searchpath=os.getcwd())
 TEMPLATE_ENVIRONMENT = jinja2.Environment(loader=TEMPLATE_LOADER)
 
+def not_allowed():
+    return "You are not allowed to see this page"
+
+def authentication_req(resource):
+    def auth():
+        cookie = cherrypy.request.cookie
+        if cherrypy.session.get(cherrypy.request.cookie["user"]):
+            return resource()
+        else:
+            return not_allowed()
+    return auth
+
 class Pynance(object):
     
     @cherrypy.expose
@@ -19,6 +31,8 @@ class Pynance(object):
     def login(self, username, password):
         if cherrypy.request.method == "POST":
             if login_check(username, password):
+                cherrypy.session["user." + username] = True
+                cherrypy.response.cookie["user"] = "user." + username
                 return "OK"
             else:
                 return "FAIL"
@@ -26,6 +40,11 @@ class Pynance(object):
             # raise 405
             cherrypy.response.status = 405
             return "Login with POST."
+     
+    @authentication_req
+    @cherrypy.expose
+    def dashboard(self):
+        return "You're in the dashboard!"
 
 if __name__ == "__main__":
     config = {
@@ -46,7 +65,10 @@ if __name__ == "__main__":
             },
         "/":
             {
+                # Custom DBSessionTool, see orm.orm_basse
                 "tools.db.on": True,
+                # cherrypy.session
+                "tools.session.on": True,
             }
     }
     SAEngine(cherrypy.engine).subscribe()
