@@ -68,7 +68,7 @@ if __name__ == "__main__":
                 # Custom DBSessionTool, see orm.orm_basse
                 "tools.db.on": True,
                 # cherrypy.session
-                "tools.session.on": True,
+                "tools.sessions.on": True,
             }
     }
     SAEngine(cherrypy.engine).subscribe()
