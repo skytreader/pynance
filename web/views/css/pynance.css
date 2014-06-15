@@ -29,10 +29,10 @@ div.login_box{
 div.login_info{
     visibility: hidden;
     padding: 3px;
-    width: 100%;
-    background-color: #f00;
+    background-color: #faa732;
     color: #fff;
     border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 div.pynance_promo{

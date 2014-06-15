@@ -29,6 +29,13 @@ class Pynance(object):
 
     @cherrypy.expose
     def login(self, username, password):
+        """
+        Log-in API handler. This is only used to validate username and password
+        via a HTTP hit. When the response is "OK", user should be able to visit
+        any page decorated with @authentication_req.
+
+        The request should be in POST.
+        """
         if cherrypy.request.method == "POST":
             if login_check(username, password):
                 cherrypy.session["user." + username] = True
@@ -62,6 +69,11 @@ if __name__ == "__main__":
             {
                 "tools.staticdir.on": True,
                 "tools.staticdir.dir": os.getcwd() + "/web/views/images"
+            },
+        "/scripts":
+            {
+                "tools.staticdir.on": True,
+                "tools.staticdir.dir": os.getcwd() + "/web/views/scripts"
             },
         "/":
             {
