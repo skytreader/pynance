@@ -2,6 +2,7 @@ from orm.orm_base import DBSessionTool, SAEngine#, CustomTool
 from models.login import login_check
 
 import cherrypy
+import functools
 import jinja2
 import os
 
@@ -12,7 +13,10 @@ def not_allowed():
     return "You are not allowed to see this page"
 
 def authentication_req(resource):
+    cherrypy.log("In authentication_req " + str(resource))
+
     def auth():
+        cherrypy.log("In auth...")
         cookie = cherrypy.request.cookie
         if cherrypy.session.get(cherrypy.request.cookie["user"]):
             return resource()
@@ -54,7 +58,9 @@ class Pynance(object):
         return "You're in the dashboard!"
 
     @cherrypy.expose
+    @authentication_req
     def test(self):
+        cherrypy.log("In test")
         return "Hello!"
 
 if __name__ == "__main__":
