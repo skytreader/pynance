@@ -24,4 +24,6 @@ TODO
 Redirect to dashboard.
 */
 function toDashboard(data, textStatus, jqXHR){
+    console.log("Success");
+    window.location = "/dashboard";
 }

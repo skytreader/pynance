@@ -53,6 +53,10 @@ class Pynance(object):
     def dashboard(self):
         return "You're in the dashboard!"
 
+    @cherrypy.expose
+    def test(self):
+        return "Hello!"
+
 if __name__ == "__main__":
     config = {
         "/css/bootstrap.css":
