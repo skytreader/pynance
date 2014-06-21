@@ -12,17 +12,6 @@ TEMPLATE_ENVIRONMENT = jinja2.Environment(loader=TEMPLATE_LOADER)
 def not_allowed():
     return "You are not allowed to see this page"
 
-def authentication_req(resource):
-    cherrypy.log("In authentication_req " + str(resource))
-
-    def auth(self):
-        cherrypy.log("In auth...")
-        cookie = cherrypy.request.cookie
-        if cherrypy.session.get(cherrypy.request.cookie["user"]):
-            return resource()
-        else:
-            return not_allowed()
-    return auth
 
 class Pynance(object):
     
@@ -51,9 +40,21 @@ class Pynance(object):
             # raise 405
             cherrypy.response.status = 405
             return "Login with POST."
+
+    def authentication_req(resource):
+        cherrypy.log("In authentication_req " + str(resource))
+    
+        def auth(self):
+            cherrypy.log("In auth...")
+            cookie = cherrypy.request.cookie
+            if cherrypy.session.get(cherrypy.request.cookie["user"]):
+                return resource()
+            else:
+                return not_allowed()
+        return auth
      
-    @authentication_req
     @cherrypy.expose
+    @authentication_req
     def dashboard(self):
         return "You're in the dashboard!"
 
