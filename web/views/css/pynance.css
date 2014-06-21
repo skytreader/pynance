@@ -24,6 +24,7 @@ div.login_box{
     width: 24%;
     float: left;
     position: relative;
+    z-index: 1;
 }
 
 div.login_info{
