@@ -47,7 +47,8 @@ class Pynance(object):
         def auth(self):
             cherrypy.log("In auth...")
             cookie = cherrypy.request.cookie
-            if cherrypy.session.get(cherrypy.request.cookie.get("user")):
+            cherrypy.log(cherrypy.request.cookie.get("user").value)
+            if cherrypy.session.get(cherrypy.request.cookie.get("user").value):
                 return resource()
             else:
                 return not_allowed()
