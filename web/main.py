@@ -15,7 +15,7 @@ def not_allowed():
 def authentication_req(resource):
     cherrypy.log("In authentication_req " + str(resource))
 
-    def auth():
+    def auth(self):
         cherrypy.log("In auth...")
         cookie = cherrypy.request.cookie
         if cherrypy.session.get(cherrypy.request.cookie["user"]):
@@ -57,11 +57,14 @@ class Pynance(object):
     def dashboard(self):
         return "You're in the dashboard!"
 
-    @cherrypy.expose
     @authentication_req
     def test(self):
         cherrypy.log("In test")
         return "Hello!"
+
+    @cherrypy.expose
+    def test2(self):
+        return self.test()
 
 if __name__ == "__main__":
     config = {
