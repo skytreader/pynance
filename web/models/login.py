@@ -7,13 +7,12 @@ def login_check(username, password):
     Returns the user id of the queried user if user exists; otherwise, returns
     None.
     """
+    # Create a query object
     q =  cherrypy.request.db.query(Users).filter(Users.username==username, \
       Users.password==password).limit(1)
 
-    
+    # Execute the query object; userdata is a ResultProxy object
     userdata = cherrypy.request.db.execute(q)
-    with userdata as data:
-        the_user = data.fetchone()
-
-        if the_user:
-            return the_user["userid"]
+    the_user = dict(userdata.first())
+    if the_user:
+        return the_user["users_userid"]

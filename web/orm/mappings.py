@@ -10,7 +10,7 @@ BUDGET_SCALE = 2
 Base = declarative_base()
 
 class Users(Base, TableTemplate):
-    #__tablename__ = "users"
+    __tablename__ = "users"
 
     userid = Column(INTEGER, primary_key = True)
     username = Column(VARCHAR(length = 255))
