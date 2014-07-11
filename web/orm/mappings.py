@@ -10,6 +10,9 @@ BUDGET_SCALE = 2
 Base = declarative_base()
 
 class Users(Base, TableTemplate):
+    """
+    The users of this web app. All userids in other tables map to this table.
+    """
     __tablename__ = "users"
 
     userid = Column(INTEGER, primary_key = True)
@@ -21,6 +24,10 @@ class Users(Base, TableTemplate):
     can_exec = Column(BOOLEAN, default = False)
 
 class Expenses(TableTemplate, Base):
+    """
+    A listing of all the expenses a user has made. This table allows the distinction
+    between planned expenses and unplanned expenses.
+    """
     __tablename__ = "expenses"
 
     expense_id = Column(INTEGER, primary_key = True)
@@ -31,6 +38,10 @@ class Expenses(TableTemplate, Base):
     expense_date = Column(TIMESTAMP, default = datetime.datetime.utcnow)
 
 class ExpenseBreakdown(TableTemplate, Base):
+    """
+    The subcategories of an expense. For instance, "Vacation" may include travel
+    costs, lodging, food, etc.
+    """
     __tablename__ = "expense_breakdown"
 
     breakdown_id = Column(INTEGER, primary_key = True)
@@ -39,6 +50,12 @@ class ExpenseBreakdown(TableTemplate, Base):
     expense_cost = Column(DECIMAL(precision = BUDGET_PRECISION, scale = BUDGET_SCALE))
 
 class ExpenseProjections(TableTemplate, Base):
+    """
+    A table of projected expenses. recurrence_factor is a multiplier on how
+    many times is this particular projection expected to recur. Since the period
+    over which we budget is arbitrary (i.e., we can budget for a month, a quarter,
+    etc.---entirely up to us).
+    """
     __tablename__ = "expense_projections"
 
     projection_id = Column(INTEGER, primary_key = True)
@@ -50,6 +67,9 @@ class ExpenseProjections(TableTemplate, Base):
     expense_fulfilled = Column(INTEGER, ForeignKey("expenses.expense_id"))
 
 class History(TableTemplate, Base):
+    """
+    Table of budget projection summaries.
+    """
     __tablename__ = "history"
 
     history_id = Column(INTEGER, primary_key = True)
