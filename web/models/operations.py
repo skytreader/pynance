@@ -11,6 +11,32 @@ Tutorial for using the session object in insert and update:
 http://docs.sqlalchemy.org/en/rel_0_9/orm/session.html#adding-new-or-existing-items
 """
 
+class DBOperations(object):
+    
+    def __init__(self, ormmap):
+        self.ormmap = ormmap
+
+    def insert(self):
+        try:
+            cherrypy.requests.db.add(self.ormmap)
+            cherrypy.requests.db.commit()
+        except:
+            cherrypy.request.db.rollback()
+            raise
+
+    def edit(self, filter_fn, edit_fields, limit=None):
+        try:
+            if limit:
+                cherrypy.requests.db.query(type(ormmap)).filter(filter_fn()) \
+                  .update(edit_fields)
+            else:
+                cherrypy.requests.db.query(type(ormmap)).filter(filter_fn()).limit(1) \
+                  .update(edit_fields)
+            cherrypy.requests.db.commit()
+        except:
+            cherrypy.requests.db.rollback()
+            raise
+
 class UserOperations(object):
     
     @staticmethod
