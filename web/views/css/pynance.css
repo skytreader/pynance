@@ -49,3 +49,8 @@ div.pynance_promo{
 /*
 The following styles are specific to the main app.
 */
+
+div.app_box{
+    background-color: #fff;
+    width: 100;
+}
