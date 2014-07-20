@@ -23,7 +23,8 @@ class Pynance(object):
     @cherrypy.expose
     def main_app(self):
         template = TEMPLATE_ENVIRONMENT.get_template("web/views/main_app.jinja")
-        return template.render(static=os.getcwd(), page_scripts=("scripts/jquery.dataTables.js",))
+        return template.render(static=os.getcwd(),
+          page_scripts=("scripts/jquery.dataTables.js", "scripts/main_app.js"))
 
     @cherrypy.expose
     def login(self, username, password):
