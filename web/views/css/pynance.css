@@ -53,4 +53,6 @@ The following styles are specific to the main app.
 div.app_box{
     background-color: #fff;
     width: 100;
+    margin: 10px;
+    padding: 10px;
 }
