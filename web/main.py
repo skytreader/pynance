@@ -1,5 +1,7 @@
 from orm.orm_base import DBSessionTool, SAEngine#, CustomTool
 from models.login import login_check
+from models.operations import DBOperations
+from orm.mappings import *
 
 import cherrypy
 import functools
@@ -104,9 +106,6 @@ if __name__ == "__main__":
     }
     SAEngine(cherrypy.engine).subscribe()
     cherrypy.tools.db = DBSessionTool()
-    #cherrypy.tools.chad = CustomTool()
-    # Huh? cherrypy.tree.mount?
     cherrypy.tree.mount(Pynance(), config=config)
-    #cherrypy.quickstart(Pynance(), config=config)
     cherrypy.engine.start()
     cherrypy.engine.block()
