@@ -1,3 +1,11 @@
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS expenses;
+DROP TABLE IF EXISTS expense_breakdown;
+DROP TABLE IF EXISTS expense_projections;
+DROP TABLE IF EXISTS history;
+SET FOREIGN_KEY_CHECKS = 1;
+
 CREATE TABLE IF NOT EXISTS users(
     userid INTEGER AUTO_INCREMENT,
     username VARCHAR(255) UNIQUE NOT NULL,
@@ -62,7 +70,7 @@ CREATE TABLE IF NOT EXISTS expense_projections(
 
 CREATE TABLE IF NOT EXISTS history(
     history_id INTEGER AUTO_INCREMENT,
-    userid INTEGER,
+    userid INTEGER NOT NULL,
     snapshot_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     current_budget DECIMAL(8, 2) NOT NULL,
     period_expenses DECIMAL(8, 2) NOT NULL,
