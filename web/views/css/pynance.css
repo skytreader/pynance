@@ -8,6 +8,10 @@ body{
     background-image: url("/images/noisy_grid/noisy_grid.png");
 }
 
+/*
+The following styles are specific to the home page.
+*/
+
 div.head_box{
     background-color: #000;
     background-image: url("/images/simple_dashed/simple_dashed.png");
@@ -40,4 +44,15 @@ div.pynance_promo{
     color: #fff;
     padding: 20px 10px;
     position: relative;
+}
+
+/*
+The following styles are specific to the main app.
+*/
+
+div.app_box{
+    background-color: #fff;
+    width: 100;
+    margin: 10px;
+    padding: 10px;
 }

@@ -1,0 +1,19 @@
+{#
+Template for the logged-in part of the web app.
+
+Variables
+  module_name - Text displayed at the top of the page.
+#}
+{% extends "web/views/pynance.jinja" %}
+{% block content %}
+    <div class="app_box">
+        <h1>{{ module_name }}</h1>
+        <table id="finance_summary" class="table">
+            <tr>
+                <td>Month</td>
+                <td>Number 1</td>
+                <td>Number 2</td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
