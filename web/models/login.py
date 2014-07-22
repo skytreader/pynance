@@ -16,3 +16,5 @@ def login_check(username, password):
     the_user = dict(userdata.first())
     if the_user:
         return the_user["users_userid"]
+
+    return None
