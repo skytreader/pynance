@@ -22,6 +22,17 @@ class DBOperations(object):
     def __init__(self, ormmap):
         self.ormmap = ormmap
 
+    def select(self, filter_fn, limit=None):
+        """
+        Select records from a given table in the database. Can't do joins sorry.
+
+        Returns the raw return of an executed query.
+        """
+        query = cherrypy.request.db.query(type(self.ormmap)).filter(filter_fn()).limit(limit) \
+          if limit else cherrypy.request.db.query(type(self.ormmap)).filter(filter_fn())
+
+        return cherrypy.request.db.execute(query)
+
     def insert(self):
         """
         Insert a row into a particular table in the database. The details of the
