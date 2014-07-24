@@ -40,8 +40,8 @@ class DBOperations(object):
         instance used to construct this DBOperations object.
         """
         try:
-            cherrypy.requests.db.add(self.ormmap)
-            cherrypy.requests.db.commit()
+            cherrypy.request.db.add(self.ormmap)
+            cherrypy.request.db.commit()
         except:
             cherrypy.request.db.rollback()
             raise
@@ -61,14 +61,14 @@ class DBOperations(object):
         """
         try:
             if limit:
-                cherrypy.requests.db.query(type(ormmap)).filter(filter_fn()) \
+                cherrypy.request.db.query(type(ormmap)).filter(filter_fn()) \
                   .update(edit_fields)
             else:
-                cherrypy.requests.db.query(type(ormmap)).filter(filter_fn()).limit(1) \
+                cherrypy.request.db.query(type(ormmap)).filter(filter_fn()).limit(1) \
                   .update(edit_fields)
-            cherrypy.requests.db.commit()
+            cherrypy.request.db.commit()
         except:
-            cherrypy.requests.db.rollback()
+            cherrypy.request.db.rollback()
             raise
 
 class UserOperations(object):
