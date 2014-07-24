@@ -52,6 +52,7 @@ class DBSessionTool(cherrypy.Tool):
           priority=0)
         self.session = scoped_session(sessionmaker(autoflush=True, autocommit=False))
         self.bind_session()
+        cherrypy.log("session bound " + str(self.session))
 
     def _setup(self):
         # super(DBSessionTool, self)._setup(self)
