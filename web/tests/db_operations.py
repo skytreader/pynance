@@ -7,6 +7,15 @@ import unittest
 
 class DBOperationsTest(unittest.TestCase):
     
+    def setUp(self):
+        SAEngine(cherrypy.engine).subscribe()
+        cherrypy.tools.db = DBSessionTool()
+        cherrypy.tree.mount(None)
+        cherrypy.engine.start()
+
+    def tearDown(self):
+        cherrypy.engine.exit()
+    
     def insert_test(self):
         pass
 
@@ -22,9 +31,4 @@ class DBOperationsTest(unittest.TestCase):
         user_selector.select(filter_fn)
 
 if __name__ == "__main__":
-    SAEngine(cherrypy.engine).subscribe()
-    cherrypy.tools.db = DBSessionTool()
-    cherrypy.tree.mount(None)
-    cherrypy.engine.start()
     unittest.main()
-    cherrypy.engine.exit()
