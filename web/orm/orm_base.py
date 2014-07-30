@@ -45,12 +45,14 @@ class DBSessionTool(cherrypy.Tool):
     Taken from http://www.defuze.org/archives/222-integrating-sqlalchemy-into-a-cherrypy-application.html
     """
     
-    def __init__(self):
+    def __init__(self, engine):
         #super(DBSessionTool, self).__init__(self, "on_start_resource",\
         #  self.bind_session, priority=20)
         cherrypy.Tool.__init__(self, "on_start_resource", self.bind_session, \
           priority=0)
-        self.session = scoped_session(sessionmaker(autoflush=True, autocommit=False))
+        #self.session = scoped_session(sessionmaker(autoflush=True, autocommit=False))
+        Sesh = sessionmaker()
+        self.session = Session.configure(bind=engine)
         self.bind_session()
         cherrypy.log("session bound " + str(self.session))
 
