@@ -50,10 +50,10 @@ class DBSessionTool(cherrypy.Tool):
         #  self.bind_session, priority=20)
         cherrypy.Tool.__init__(self, "on_start_resource", self.bind_session, \
           priority=0)
-        #self.session = scoped_session(sessionmaker(autoflush=True, autocommit=False))
-        Sesh = sessionmaker()
-        self.session = Session.configure(bind=engine)
-        self.bind_session()
+        self.session = scoped_session(sessionmaker(autoflush=True, autocommit=False))
+        #Sesh = sessionmaker()
+        #self.session = Sesh.configure(bind=engine)
+        #self.bind_session()
         cherrypy.log("session bound " + str(self.session))
 
     def _setup(self):
@@ -65,6 +65,7 @@ class DBSessionTool(cherrypy.Tool):
     def bind_session(self):
         cherrypy.engine.publish("bind", self.session)
         cherrypy.request.db = self.session
+        cherrypy.log("self.session is now cherrypy.request.db")
 
     def commit_transaction(self):
         cherrypy.request.db = None

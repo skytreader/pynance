@@ -1,3 +1,4 @@
+from sqlalchemy import create_engine
 from web.models.operations import DBOperations
 from web.orm.mappings import Users
 from web.orm.orm_base import DBSessionTool, SAEngine
@@ -9,8 +10,9 @@ class DBOperationsTest(unittest.TestCase):
     
     def setUp(self):
         SAEngine(cherrypy.engine).subscribe()
-        cherrypy.tools.db = DBSessionTool()
-        cherrypy.tree.mount(None)
+        db_engine = create_engine("mysql://root:@localhost:3306/pynance")
+        cherrypy.tools.db = DBSessionTool(db_engine)
+        cherrypy.tree.mount(None, "/", {"/":{"tools.db.on": True}})
         cherrypy.engine.start()
 
     def tearDown(self):

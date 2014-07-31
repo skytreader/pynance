@@ -2,6 +2,7 @@ from orm.orm_base import DBSessionTool, SAEngine#, CustomTool
 from models.login import login_check
 from models.operations import DBOperations
 from orm.mappings import *
+from sqlalchemy import create_engine
 
 import cherrypy
 import functools
@@ -102,10 +103,23 @@ if __name__ == "__main__":
                 "tools.db.on": True,
                 # cherrypy.session
                 "tools.sessions.on": True,
+            },
+        "db":
+            {
+                "host": "localhost",
+                "port": 3306,
+                "user": "root",
+                "password": "",
+                "name": "pynance",
+                "engine": "mysql"
             }
     }
+    db_cfgs = config["db"]
+    db_engine = create_engine(db_cfgs["engine" + "://" + db_cfgs["user"] + ":" + \
+      db_cfgs["password"] + "@" + db_cfgs["host"] + ":" + db_cfgs["port"] + "/" + \
+      db_cfgs["name"])
     SAEngine(cherrypy.engine).subscribe()
-    cherrypy.tools.db = DBSessionTool()
+    cherrypy.tools.db = DBSessionTool(db_engine)
     cherrypy.tree.mount(Pynance(), config=config)
     cherrypy.engine.start()
     cherrypy.engine.block()
