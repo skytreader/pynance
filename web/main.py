@@ -115,11 +115,11 @@ if __name__ == "__main__":
             }
     }
     db_cfgs = config["db"]
-    db_engine = create_engine(db_cfgs["engine" + "://" + db_cfgs["user"] + ":" + \
-      db_cfgs["password"] + "@" + db_cfgs["host"] + ":" + db_cfgs["port"] + "/" + \
-      db_cfgs["name"])
+    #db_engine = create_engine(db_cfgs["engine" + "://" + db_cfgs["user"] + ":" + \
+    #  db_cfgs["password"] + "@" + db_cfgs["host"] + ":" + db_cfgs["port"] + "/" + \
+    #  db_cfgs["name"])
     SAEngine(cherrypy.engine).subscribe()
-    cherrypy.tools.db = DBSessionTool(db_engine)
+    cherrypy.tools.db = DBSessionTool(None)
     cherrypy.tree.mount(Pynance(), config=config)
     cherrypy.engine.start()
     cherrypy.engine.block()

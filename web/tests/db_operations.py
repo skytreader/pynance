@@ -12,6 +12,7 @@ class DBOperationsTest(unittest.TestCase):
         SAEngine(cherrypy.engine).subscribe()
         db_engine = create_engine("mysql://root:@localhost:3306/pynance")
         cherrypy.tools.db = DBSessionTool(db_engine)
+        cherrypy.tools.db.bind_session()
         cherrypy.tree.mount(None, "/", {"/":{"tools.db.on": True}})
         cherrypy.engine.start()
 
