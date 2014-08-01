@@ -7,10 +7,9 @@ from web.main import Pynance
 import cherrypy
 import unittest
 
-class PynanceDbOpsTest(unittest.TestCase):
+class PynanceDbOpsTest(object):
     
-    
-    def test_select(self):
+    def insert_select(self):
         user = Users()
         user.username = "hsimpson"
         user.password = "donuts"
@@ -18,7 +17,7 @@ class PynanceDbOpsTest(unittest.TestCase):
         user_operations.insert()
 
         user_selector = DBOperations(Users())
-        filter_fn = lambda : User.usernmae == "hsimpson"
+        filter_fn = lambda : User.username == "hsimpson"
         user_selector.select(filter_fn)
 
 class DBOperationsTest(unittest.TestCase):
@@ -28,7 +27,8 @@ class DBOperationsTest(unittest.TestCase):
         db_engine = create_engine("mysql://root:@localhost:3306/pynance")
         cherrypy.tools.db = DBSessionTool(None)
         cherrypy.tools.db.bind_session()
-        cherrypy.tree.mount(self, config={"/":{"tools.db.on": True}})
+        self.context_operator = PynanceDbOpsTest()
+        cherrypy.tree.mount(self.context_operator, config={"/":{"tools.db.on": True}})
         cherrypy.engine.start()
 
     def tearDown(self):
@@ -38,15 +38,7 @@ class DBOperationsTest(unittest.TestCase):
         pass
 
     def test_select(self):
-        user = Users()
-        user.username = "hsimpson"
-        user.password = "donuts"
-        user_operations = DBOperations(user)
-        user_operations.insert()
-
-        user_selector = DBOperations(Users())
-        filter_fn = lambda : User.usernmae == "hsimpson"
-        user_selector.select(filter_fn)
+        self.context_operator.insert_select()
 
 if __name__ == "__main__":
     unittest.main()
