@@ -8,6 +8,16 @@ import unittest
 Taken from https://bitbucket.org/Lawouach/cherrypy-recipes/src/50aff88dc4e2/testing/unit/serverless/?at=default
 """
 
+# Receommended but not required
+cherrypy.config.update({"environment": "test_suite"})
+
+# Stop the HTTP server so we are sure we get a fresh shot
+cherrypy.server.subscribe()
+
+# Fake sockets
+local = cherrypy.lib.httputil.Host("127.0.0.1", 50000, "")
+remote = cherrypy.lib.httputil.Host("127.0.0.1", 50001, "")
+
 class BaseCherryPyTestCase(unittest.TestCase):
     def request(self, path="/", method="GET", app_path="", scheme="http",
       proto="HTTP/1.1", data=None, headers=None, **kwargs):
