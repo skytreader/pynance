@@ -8,7 +8,7 @@ import unittest
 Taken from https://bitbucket.org/Lawouach/cherrypy-recipes/src/50aff88dc4e2/testing/unit/serverless/?at=default
 """
 
-class BaseCherryPyTestCase(unittest.TestCase):\
+class BaseCherryPyTestCase(unittest.TestCase):
     def request(self, path="/", method="GET", app_path="", scheme="http",
       proto="HTTP/1.1", data=None, headers=None, **kwargs):
         """
@@ -19,7 +19,7 @@ class BaseCherryPyTestCase(unittest.TestCase):\
           many threads from within a unit test, you can mostly forget about the
           thread data aspect of the response.
 
-        - Responses are dispatched to a monted application's page handler, if
+        - Responses are dispatched to a mounted application's page handler, if
           found. This is the reason why you must indicate which app you are
           targetting with this request by specifying its mount point.
         """
