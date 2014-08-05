@@ -13,7 +13,7 @@ def setUpModule():
         "/":
             {
                 "tools.db.on": True,
-                "tools.session.on": True
+                "tools.sessions.on": True
             }
     }
     SAEngine(cherrypy.engine).subscribe()
