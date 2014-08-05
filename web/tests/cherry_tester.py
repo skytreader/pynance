@@ -32,3 +32,36 @@ class BaseCherryPyTestCase(unittest.TestCase):\
             data = urllib.urlencode(kwargs)
             kwargs = None
             h["content-type"] = "application/x-www-form-urlencoded"
+
+        # URL-encode kwargs
+        query_string = urllib.urlencode(kwargs) if kwargs else None
+
+        # request entity fields
+        file_descriptor = None
+        if data is not None:
+            h["content-length"] = str(len(data))
+            file_descriptor = StringIO(data)
+
+        # Run the request against the app
+        app = cherrypy.tree.apps.get(app_path)
+        if not app:
+            raise RuntimeError("Cherrypy app was not created properly or is terminated")
+
+        app.release_serving()
+
+        request, response = app.get_serving(local, remote, scheme, proto)
+
+        try:
+            h = [(key, val) for key, val in h.iteritems()]
+            response = request.run(method, path, query_string, proto, h, file_descriptor)
+        finally:
+            if file_descriptor:
+                file_descriptor.close()
+                file_descriptor = None
+
+        if response.output_status.startswith("500"):
+            print response.body
+            raise RuntimeError("Unexpected server error")
+
+        response.collapse_body()
+        return response
