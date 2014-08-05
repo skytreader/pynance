@@ -1,3 +1,4 @@
+from cherry_tester import BaseCherryPyTestCase
 from sqlalchemy import create_engine
 from web.models.operations import DBOperations
 from web.orm.mappings import Users
@@ -6,6 +7,24 @@ from web.main import Pynance
 
 import cherrypy
 import unittest
+
+def setUpModule():
+    config = {
+        "/":
+            {
+                "tools.db.on": True,
+                "tools.session.on": True
+            }
+    }
+    SAEngine(cherrypy.engine).subscribe()
+    cherrypy.tools.db = DBSessionTool(None)
+    cherrypy.tree.mount(PynanceDbOpsTest(), "/", config=config)
+    cherrypy.engine.start()
+setup_module = setUpModule
+
+def tearDownModule():
+    cherrypy.engine.exit()
+teardown_module = tearDownModule
 
 class PynanceDbOpsTest(object):
     
@@ -20,7 +39,7 @@ class PynanceDbOpsTest(object):
         filter_fn = lambda : User.username == "hsimpson"
         user_selector.select(filter_fn)
 
-class DBOperationsTest(unittest.TestCase):
+class DBOperationsTest(BaseCherryPyTestCase):
     
     def setUp(self):
         SAEngine(cherrypy.engine).subscribe()
