@@ -66,10 +66,17 @@
             <optional>true</optional>
             <version>2.7.8</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+            <version>42.5.4</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <defaultGoal>jetty:run</defaultGoal>
+        <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
