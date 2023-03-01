@@ -1,39 +1,41 @@
 package net.skytreader.model;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class CreativeAwesomeModel {
 
-    @Column(name="created_at")
-    private LocalDateTime createdAt;
+    @Column(name="created_at", nullable = false, columnDefinition =
+            "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime createdAt;
 
-    @Column(name="modified_at")
-    private LocalDateTime modifiedAt;
+    @Column(name="modified_at", nullable = false, columnDefinition =
+            "TIMESTAMP WITH TIME ZONE")
+    private ZonedDateTime modifiedAt;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public CreativeAwesomeModel() {
-        this.createdAt = LocalDateTime.now();
-        this.modifiedAt = LocalDateTime.now();
+        this.createdAt = ZonedDateTime.now();
+        this.modifiedAt = ZonedDateTime.now();
     }
 
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getModifiedAt() {
+    public ZonedDateTime getModifiedAt() {
         return modifiedAt;
     }
 
-    public void setModifiedAt(LocalDateTime modifiedAt) {
+    public void setModifiedAt(ZonedDateTime modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
 

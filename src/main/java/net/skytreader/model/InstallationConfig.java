@@ -8,9 +8,9 @@ import javax.persistence.Table;
 @Table(name="installation_config")
 public class InstallationConfig extends CreativeAwesomeModel{
 
-    @Column
+    @Column(nullable = false)
     private String key;
-    @Column
+    @Column(nullable = false)
     private String value;
 
     public InstallationConfig(String key, String value) {
