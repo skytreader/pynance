@@ -151,7 +151,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>4.6.1</version>
                 <configuration>
-                    <changeLogFile>0001_create_tables.sql</changeLogFile>
+                    <changeLogFile>src/main/resources/dbschema.yaml</changeLogFile>
                     <url>jdbc:postgresql://localhost:5432/pynance</url>
                     <username>pynance</username>
                     <password>localdev</password>

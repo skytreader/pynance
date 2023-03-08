@@ -1,0 +1,128 @@
+databaseChangeLog:
+- changeSet:
+    id: 1
+    author: cestioco (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: discount_dates_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: modified_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: date_observed
+            type: date
+        - column:
+            constraints:
+              nullable: false
+            name: description
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: duration
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: shop
+            type: VARCHAR(255)
+        tableName: discount_dates
+- changeSet:
+    id: 2
+    author: cestioco (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: expenses_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: modified_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            name: category
+            type: VARCHAR(255)
+        - column:
+            name: comments
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: cost
+            type: FLOAT4
+        - column:
+            constraints:
+              nullable: false
+            name: expense_date
+            type: date
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: expenses
+- changeSet:
+    id: 3
+    author: cestioco (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: installation_config_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: modified_at
+            type: TIMESTAMP WITH TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: key
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: value
+            type: VARCHAR(255)
+        tableName: installation_config
+
