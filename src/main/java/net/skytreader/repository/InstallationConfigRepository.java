@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface InstallationConfigRepository extends JpaRepository<InstallationConfig, Long> {
 
-    @Query("SELECT key, value FROM installation_config WHERE key in :keys")
+    @Query("SELECT key, value FROM InstallationConfig WHERE key in :keys")
     List<InstallationConfig> fetchConfig(@Param("keys") Collection<String> keys);
 }

@@ -2,8 +2,10 @@ package net.skytreader.logic;
 
 import net.skytreader.exceptions.ConfigConstraintException;
 import net.skytreader.exceptions.ConfigValueException;
+import net.skytreader.model.InstallationConfig;
+import net.skytreader.repository.InstallationConfigRepository;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class encapsulates the config keys we expect to be in the database as
@@ -24,6 +26,17 @@ public class Config {
 
     public Config(Map<String, String> cfg) {
         this.cfg = cfg;
+    }
+
+    public Config(InstallationConfigRepository icr) {
+        this.cfg = new HashMap<String, String>();
+        Collection<String> configKeys = Arrays.asList(Config.KEY_NET_MONTHLY,
+                Config.KEY_LIVING_COST_PERCENT, Config.KEY_ALLOWANCE_PERCENT,
+                Config.KEY_PROJECTED_LIMIT_UTILITIES,
+                Config.KEY_PROJECTED_LIMIT_FOOD);
+        for (InstallationConfig configRecord : icr.fetchConfig(configKeys)){
+            this.cfg.put(configRecord.getKey(), configRecord.getValue());
+        }
     }
 
     public float fetchNetMonthly() {

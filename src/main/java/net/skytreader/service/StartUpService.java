@@ -1,8 +1,7 @@
 package net.skytreader.service;
 
+import net.skytreader.logic.Config;
 import net.skytreader.repository.InstallationConfigRepository;
-
-import java.util.Map;
 
 public class StartUpService {
     private final InstallationConfigRepository configRepository;
@@ -13,6 +12,7 @@ public class StartUpService {
 
     // TODO
     public boolean isInstallationComplete() {
+        Config c = new Config(this.configRepository);
         return false;
     }
 }
