@@ -13,13 +13,13 @@ import java.util.*;
  */
 public class Config {
 
-    private static final String KEY_NET_MONTHLY = "net-monthly";
-    private static final String KEY_LIVING_COST_PERCENT = "living-costs" +
+    protected static final String KEY_NET_MONTHLY = "net-monthly";
+    protected static final String KEY_LIVING_COST_PERCENT = "living-costs" +
             "-percent";
-    private static final String KEY_ALLOWANCE_PERCENT = "allowance-percent";
-    private static final String KEY_PROJECTED_LIMIT_UTILITIES = "projected" +
+    protected static final String KEY_ALLOWANCE_PERCENT = "allowance-percent";
+    protected static final String KEY_PROJECTED_LIMIT_UTILITIES = "projected" +
             "-limit-utilities";
-    private static final String KEY_PROJECTED_LIMIT_FOOD = "projected-limit" +
+    protected static final String KEY_PROJECTED_LIMIT_FOOD = "projected-limit" +
             "-food";
 
     private Map<String, String> cfg;
