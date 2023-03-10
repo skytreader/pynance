@@ -1,4 +1,4 @@
-package net.skytreader.exceptions;
+package net.skytreader.pynance.exceptions;
 
 public class ConfigConstraintException extends Exception {
     public ConfigConstraintException(String desc) {

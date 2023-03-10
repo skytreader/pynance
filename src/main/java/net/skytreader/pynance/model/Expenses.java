@@ -1,4 +1,4 @@
-package net.skytreader.model;
+package net.skytreader.pynance.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;

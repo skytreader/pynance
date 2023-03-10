@@ -1,4 +1,4 @@
-package net.skytreader.model;
+package net.skytreader.pynance.model;
 
 import java.time.ZonedDateTime;
 import javax.persistence.*;

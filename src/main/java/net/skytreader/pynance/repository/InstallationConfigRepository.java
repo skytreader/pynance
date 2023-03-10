@@ -1,6 +1,6 @@
-package net.skytreader.repository;
+package net.skytreader.pynance.repository;
 
-import net.skytreader.model.InstallationConfig;
+import net.skytreader.pynance.model.InstallationConfig;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

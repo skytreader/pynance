@@ -1,4 +1,4 @@
-package net.skytreader.exceptions;
+package net.skytreader.pynance.exceptions;
 
 public class ConfigValueException extends Exception {
     public ConfigValueException(String key, String val){

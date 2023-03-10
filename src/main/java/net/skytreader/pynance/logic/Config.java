@@ -1,9 +1,9 @@
-package net.skytreader.logic;
+package net.skytreader.pynance.logic;
 
-import net.skytreader.exceptions.ConfigConstraintException;
-import net.skytreader.exceptions.ConfigValueException;
-import net.skytreader.model.InstallationConfig;
-import net.skytreader.repository.InstallationConfigRepository;
+import net.skytreader.pynance.exceptions.ConfigConstraintException;
+import net.skytreader.pynance.exceptions.ConfigValueException;
+import net.skytreader.pynance.model.InstallationConfig;
+import net.skytreader.pynance.repository.InstallationConfigRepository;
 
 import java.util.*;
 

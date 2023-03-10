@@ -1,4 +1,4 @@
-package net.skytreader;
+package net.skytreader.pynance;
 
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.server.PWA;

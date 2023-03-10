@@ -1,7 +1,7 @@
-package net.skytreader.service;
+package net.skytreader.pynance.service;
 
-import net.skytreader.logic.Config;
-import net.skytreader.repository.InstallationConfigRepository;
+import net.skytreader.pynance.logic.Config;
+import net.skytreader.pynance.repository.InstallationConfigRepository;
 
 public class StartUpService {
     private final InstallationConfigRepository configRepository;
