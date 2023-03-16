@@ -34,7 +34,7 @@ public class Config {
                 Config.KEY_LIVING_COST_PERCENT, Config.KEY_ALLOWANCE_PERCENT,
                 Config.KEY_PROJECTED_LIMIT_UTILITIES,
                 Config.KEY_PROJECTED_LIMIT_FOOD);
-        for (InstallationConfig configRecord : icr.fetchConfig(configKeys)){
+        for (InstallationConfig configRecord : icr.fetchConfig(configKeys)) {
             this.cfg.put(configRecord.getKey(), configRecord.getValue());
         }
     }
@@ -43,7 +43,7 @@ public class Config {
         return Float.parseFloat(cfg.get(Config.KEY_NET_MONTHLY));
     }
 
-    public float fetchLivingCostAllocation() throws ConfigValueException, ConfigConstraintException {
+    public float fetchLivingCostAllocation() throws ConfigConstraintException {
         int rawVal = Integer.parseInt(cfg.get(Config.KEY_LIVING_COST_PERCENT));
 
         if (rawVal > 100) {
@@ -61,8 +61,7 @@ public class Config {
         return rawVal / 100f;
     }
 
-    public float fetchAllowanceAllocation() throws ConfigValueException,
-            ConfigConstraintException {
+    public float fetchAllowanceAllocation() throws ConfigConstraintException {
         int rawVal = Integer.parseInt(cfg.get(Config.KEY_ALLOWANCE_PERCENT));
 
         if (rawVal > 100) {
