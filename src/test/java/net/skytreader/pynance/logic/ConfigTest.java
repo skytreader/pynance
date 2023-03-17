@@ -21,8 +21,7 @@ public class ConfigTest {
             HashMap<String, String> _cfg = new HashMap<String, String>();
             _cfg.put(Config.KEY_NET_MONTHLY, testVal);
             Config cfg = new Config(_cfg);
-            assertEquals(testVal,
-                    new DecimalFormat("#.00").format(cfg.fetchNetMonthly()));
+            assertEquals(testVal, cfg.fetchNetMonthly().toString());
         }
     }
 }

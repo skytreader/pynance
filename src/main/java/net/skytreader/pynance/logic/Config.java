@@ -5,6 +5,7 @@ import net.skytreader.pynance.exceptions.ConfigValueException;
 import net.skytreader.pynance.model.InstallationConfig;
 import net.skytreader.pynance.repository.InstallationConfigRepository;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -39,8 +40,8 @@ public class Config {
         }
     }
 
-    public float fetchNetMonthly() {
-        return Float.parseFloat(cfg.get(Config.KEY_NET_MONTHLY));
+    public BigDecimal fetchNetMonthly() {
+        return new BigDecimal(cfg.get(Config.KEY_NET_MONTHLY));
     }
 
     public float fetchLivingCostAllocation() throws ConfigConstraintException {
