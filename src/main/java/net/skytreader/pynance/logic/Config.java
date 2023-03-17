@@ -4,6 +4,7 @@ import net.skytreader.pynance.exceptions.ConfigConstraintException;
 import net.skytreader.pynance.exceptions.ConfigValueException;
 import net.skytreader.pynance.model.InstallationConfig;
 import net.skytreader.pynance.repository.InstallationConfigRepository;
+import org.atmosphere.interceptor.AtmosphereResourceStateRecovery;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -40,8 +41,13 @@ public class Config {
         }
     }
 
-    public BigDecimal fetchNetMonthly() {
-        return new BigDecimal(cfg.get(Config.KEY_NET_MONTHLY));
+    public BigDecimal fetchNetMonthly() throws ConfigValueException {
+        BigDecimal fromCfg = new BigDecimal(cfg.get(Config.KEY_NET_MONTHLY));
+        if (fromCfg.signum() < 0){
+            throw new ConfigValueException(Config.KEY_NET_MONTHLY,
+                    fromCfg.toString());
+        }
+        return fromCfg;
     }
 
     public float fetchLivingCostAllocation() throws ConfigConstraintException {
