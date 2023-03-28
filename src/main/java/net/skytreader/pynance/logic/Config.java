@@ -7,11 +7,14 @@ import net.skytreader.pynance.repository.InstallationConfigRepository;
 import org.atmosphere.interceptor.AtmosphereResourceStateRecovery;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.*;
 
 /**
  * This class encapsulates the config keys we expect to be in the database as
- * well as their validation.
+ * well as their validation. The methods will return null if the underlying
+ * data persistence source (e.g. the database) does not have a value for the
+ * key.
  */
 public class Config {
 
@@ -42,30 +45,49 @@ public class Config {
     }
 
     public BigDecimal fetchNetMonthly() throws ConfigValueException {
-        BigDecimal fromCfg = new BigDecimal(cfg.get(Config.KEY_NET_MONTHLY));
-        if (fromCfg.signum() < 0){
+        String configValue = cfg.get(Config.KEY_NET_MONTHLY);
+        if (configValue == null) {
+            return null;
+        }
+        BigDecimal fromCfg = new BigDecimal(configValue);
+        if (fromCfg.signum() < 0) {
             throw new ConfigValueException(Config.KEY_NET_MONTHLY,
                     fromCfg.toString());
         }
         return fromCfg;
     }
 
-    public float fetchLivingCostAllocation() throws ConfigConstraintException {
-        int rawVal = Integer.parseInt(cfg.get(Config.KEY_LIVING_COST_PERCENT));
+    /**
+     * Living cost and Allowance together may not exceed 100 (percent). But
+     * it does not have to be exactly 100 because the setting allows for
+     * "savings" which is not explicitly represented here.
+     *
+     * @return
+     * @throws ConfigConstraintException
+     */
+    public BigDecimal fetchLivingCostAllocation() throws ConfigConstraintException {
+        String configValue = cfg.get(Config.KEY_LIVING_COST_PERCENT);
+        if (configValue == null) {
+            return null;
+        }
+        int rawVal = Integer.parseInt(configValue);
 
         if (rawVal > 100) {
             throw new ConfigValueException(Config.KEY_LIVING_COST_PERCENT,
                     "" + rawVal);
         }
 
-        int rawTandemVal =
-                Integer.parseInt(cfg.get(Config.KEY_ALLOWANCE_PERCENT));
+        String tandemVal = cfg.get(Config.KEY_ALLOWANCE_PERCENT);
+        if (tandemVal == null) {
+            throw new ConfigConstraintException(Config.KEY_LIVING_COST_PERCENT + " is defined but not " + Config.KEY_ALLOWANCE_PERCENT);
+        }
+        int rawTandemVal = Integer.parseInt(tandemVal);
 
         if ((rawVal + rawTandemVal) > 100) {
             throw new ConfigConstraintException(Config.KEY_LIVING_COST_PERCENT + "  and " + Config.KEY_ALLOWANCE_PERCENT + " together should not exceed 100.");
         }
 
-        return rawVal / 100f;
+        return new BigDecimal(rawVal / 100.0, new MathContext(2));
     }
 
     public float fetchAllowanceAllocation() throws ConfigConstraintException {
