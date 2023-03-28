@@ -90,7 +90,7 @@ public class Config {
         return new BigDecimal(rawVal / 100.0, new MathContext(2));
     }
 
-    public float fetchAllowanceAllocation() throws ConfigConstraintException {
+    public BigDecimal fetchAllowanceAllocation() throws ConfigConstraintException {
         int rawVal = Integer.parseInt(cfg.get(Config.KEY_ALLOWANCE_PERCENT));
 
         if (rawVal > 100) {
@@ -105,7 +105,7 @@ public class Config {
             throw new ConfigConstraintException(Config.KEY_LIVING_COST_PERCENT + "  and " + Config.KEY_ALLOWANCE_PERCENT + " together should not exceed 100.");
         }
 
-        return rawVal / 100f;
+        return new BigDecimal(rawVal / 100.0, new MathContext(2));
     }
 
     public int fetchUtilitiesLimitProjection() {

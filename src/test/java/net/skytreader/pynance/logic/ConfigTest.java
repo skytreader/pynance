@@ -7,7 +7,6 @@ import net.skytreader.pynance.exceptions.ConfigValueException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -50,15 +49,20 @@ public class ConfigTest {
             Random r = new Random();
             int livingCostVal = r.nextInt(100);
             int allowanceVal = 100 - livingCostVal;
-            boolean ltTen = livingCostVal < 10;
-            String livingCostFrac = "0." + (ltTen ?
+            boolean livingCostLtTen = livingCostVal < 10;
+            boolean allowanceLtTen = allowanceVal < 10;
+            String livingCostFrac = "0." + (livingCostLtTen ?
                     "0" : "") + livingCostVal;
+            String allowanceFrac =
+                    "0." + (allowanceLtTen ? "0" : "") + allowanceVal;
             HashMap<String, String> _cfg = new HashMap<String, String>();
             _cfg.put(Config.KEY_LIVING_COST_PERCENT, "" + livingCostVal);
             _cfg.put(Config.KEY_ALLOWANCE_PERCENT, "" + allowanceVal);
             Config cfg = new Config(_cfg);
             assertEquals(0,
                     cfg.fetchLivingCostAllocation().compareTo(new BigDecimal(livingCostFrac)));
+            assertEquals(0,
+                    cfg.fetchAllowanceAllocation().compareTo(new BigDecimal(allowanceFrac)));
         }
     }
 }
