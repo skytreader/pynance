@@ -43,26 +43,36 @@ public class ConfigTest {
         assertNull(cfg.fetchNetMonthly());
     }
 
+    private String makeFraction(int n) {
+        assert n <= 100;
+        if (n == 100){
+            return "1";
+        } else {
+            boolean nLtTen = n < 10;
+            return "0." + (nLtTen ? "0" : "") + n;
+        }
+    }
+
     @Test
     void fetchLivingCostAllocationHappy() throws ConfigConstraintException {
         for (int i = 0; i < 100; i++) {
             Random r = new Random();
             int livingCostVal = r.nextInt(100);
             int allowanceVal = 100 - livingCostVal;
-            boolean livingCostLtTen = livingCostVal < 10;
-            boolean allowanceLtTen = allowanceVal < 10;
-            String livingCostFrac = "0." + (livingCostLtTen ?
-                    "0" : "") + livingCostVal;
-            String allowanceFrac =
-                    "0." + (allowanceLtTen ? "0" : "") + allowanceVal;
+            String livingCostFrac = makeFraction(livingCostVal);
+            String allowanceFrac = makeFraction(allowanceVal);
             HashMap<String, String> _cfg = new HashMap<String, String>();
             _cfg.put(Config.KEY_LIVING_COST_PERCENT, "" + livingCostVal);
             _cfg.put(Config.KEY_ALLOWANCE_PERCENT, "" + allowanceVal);
             Config cfg = new Config(_cfg);
+            BigDecimal livingCostFetched = cfg.fetchLivingCostAllocation();
+            BigDecimal allowanceFetched = cfg.fetchAllowanceAllocation();
             assertEquals(0,
-                    cfg.fetchLivingCostAllocation().compareTo(new BigDecimal(livingCostFrac)));
+                    livingCostFetched.compareTo(new BigDecimal(livingCostFrac)));
             assertEquals(0,
-                    cfg.fetchAllowanceAllocation().compareTo(new BigDecimal(allowanceFrac)));
+                    allowanceFetched.compareTo(new BigDecimal(allowanceFrac)));
+            assertEquals(0,
+                    BigDecimal.ONE.compareTo(livingCostFetched.add(allowanceFetched)));
         }
     }
 }
