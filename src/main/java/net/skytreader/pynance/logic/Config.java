@@ -7,6 +7,7 @@ import net.skytreader.pynance.repository.InstallationConfigRepository;
 import org.atmosphere.interceptor.AtmosphereResourceStateRecovery;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.*;
 
@@ -91,7 +92,11 @@ public class Config {
     }
 
     public BigDecimal fetchAllowanceAllocation() throws ConfigConstraintException {
-        int rawVal = Integer.parseInt(cfg.get(Config.KEY_ALLOWANCE_PERCENT));
+        String configValue = cfg.get(Config.KEY_ALLOWANCE_PERCENT);
+        if (configValue == null) {
+            return null;
+        }
+        int rawVal = Integer.parseInt(configValue);
 
         if (rawVal > 100) {
             throw new ConfigValueException(Config.KEY_ALLOWANCE_PERCENT,
@@ -108,11 +113,19 @@ public class Config {
         return new BigDecimal(rawVal / 100.0, new MathContext(2));
     }
 
-    public int fetchUtilitiesLimitProjection() {
-        return Integer.parseInt(cfg.get(Config.KEY_PROJECTED_LIMIT_UTILITIES));
+    public BigInteger fetchUtilitiesLimitProjection() {
+        String configValue = cfg.get(Config.KEY_PROJECTED_LIMIT_UTILITIES);
+        if (configValue == null) {
+            return null;
+        }
+        return new BigInteger(configValue);
     }
 
-    public int fetchFoodLimitProjection() {
-        return Integer.parseInt(cfg.get(Config.KEY_PROJECTED_LIMIT_FOOD));
+    public BigInteger fetchFoodLimitProjection() {
+        String configValue = cfg.get(Config.KEY_PROJECTED_LIMIT_FOOD);
+        if (configValue == null) {
+            return null;
+        }
+        return new BigInteger(configValue);
     }
 }
