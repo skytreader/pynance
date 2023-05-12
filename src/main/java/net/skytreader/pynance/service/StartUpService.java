@@ -1,5 +1,6 @@
 package net.skytreader.pynance.service;
 
+import net.skytreader.pynance.exceptions.ConfigConstraintException;
 import net.skytreader.pynance.logic.Config;
 import net.skytreader.pynance.repository.InstallationConfigRepository;
 
@@ -10,9 +11,16 @@ public class StartUpService {
         this.configRepository = configRepository;
     }
 
-    // TODO
     public boolean isInstallationComplete() {
         Config c = new Config(this.configRepository);
-        return false;
+        try {
+            return c.fetchAllowanceAllocation() != null &&
+                    c.fetchNetMonthly() != null &&
+                    c.fetchFoodLimitProjection() != null &&
+                    c.fetchLivingCostAllocation() != null &&
+                    c.fetchUtilitiesLimitProjection() != null;
+        } catch (ConfigConstraintException cce) {
+            return false;
+        }
     }
 }

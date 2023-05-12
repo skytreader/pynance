@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -38,8 +39,8 @@ public class StartUpServiceTest {
     private InstallationConfigRepository icr;
 
     @Test
-    void testIsInstallationCompleteTrue() {
+    void testIsInstallationCompleteFalse() {
         StartUpService sss = new StartUpService(icr);
-        assertTrue(sss.isInstallationComplete());
+        assertFalse(sss.isInstallationComplete());
     }
 }
