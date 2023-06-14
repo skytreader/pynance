@@ -6,25 +6,20 @@ import net.skytreader.pynance.model.InstallationConfig;
 import net.skytreader.pynance.repository.InstallationConfigRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -38,9 +33,28 @@ public class StartUpServiceTest {
     @Autowired
     private InstallationConfigRepository icr;
 
+    @MockBean
+    private InstallationConfigRepository testIcr;
+
     @Test
     void testIsInstallationCompleteFalse() {
         StartUpService sss = new StartUpService(icr);
         assertFalse(sss.isInstallationComplete());
+    }
+
+    @Test
+    void testIsInstallationCompleteTrue() {
+        Mockito.when(testIcr.fetchConfig(any())).thenReturn(
+                Arrays.asList(new InstallationConfig(Config.KEY_NET_MONTHLY,
+                        "500"),
+                        new InstallationConfig(Config.KEY_PROJECTED_LIMIT_FOOD, "1"),
+                        new InstallationConfig(Config.KEY_PROJECTED_LIMIT_UTILITIES, "2"),
+                        new InstallationConfig(Config.KEY_ALLOWANCE_PERCENT,
+                                "3"),
+                        new InstallationConfig(Config.KEY_LIVING_COST_PERCENT
+                                , "4"))
+        );
+        StartUpService testSus = new StartUpService(testIcr);
+        assertTrue(testSus.isInstallationComplete());
     }
 }
