@@ -57,4 +57,19 @@ public class StartUpServiceTest {
         StartUpService testSus = new StartUpService(testIcr);
         assertTrue(testSus.isInstallationComplete());
     }
+
+    @Test
+    void partialCompletionInstallation() {
+        Mockito.when(testIcr.fetchConfig(any())).thenReturn(
+                Arrays.asList(new InstallationConfig(Config.KEY_NET_MONTHLY,
+                                "500"),
+                        new InstallationConfig(Config.KEY_PROJECTED_LIMIT_FOOD, "1"),
+                        new InstallationConfig(Config.KEY_ALLOWANCE_PERCENT,
+                                "3"),
+                        new InstallationConfig(Config.KEY_LIVING_COST_PERCENT
+                                , "4"))
+        );
+        StartUpService testSus = new StartUpService(testIcr);
+        assertFalse(testSus.isInstallationComplete());
+    }
 }
